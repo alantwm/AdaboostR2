@@ -43,9 +43,9 @@ ln_beta=log(1./beta_test');
 for i=1:length(y_test)
     sort_beta=ln_beta(ind_yp(:,1));
     cumWeights = cumsum(sort_beta) ./ sum(sort_beta);    
-    j = find(cumWeights<=.5,1,'last');
-    hf(i)=yp_test(i,j+1);
-    wt(i,1)=w(i,j+1);
+    j = find(cumWeights>=.5,1,'first');
+    hf(i)=yp_test(i,j);
+    wt(i,1)=w(i,j);
 end
 
 % figure(2)

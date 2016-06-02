@@ -7,7 +7,7 @@ function [output]=twostage_tradaboostr2(xt,yt,xs,ys,N)
     F=10;cv=cvpartition(m,'kfold',F);
 beta=1;
     w(:,1)=ones(1,n+m)/(n+m);
-    for t=1:S
+    for t=1:2
 
         % Calculating Error
 %         w_cv(:,t)=ones(1,sum(cv.training(1))+n)/(sum(cv.training(1))+n);
@@ -38,12 +38,16 @@ beta=1;
 %         avg_err=sum(err_i.*w(:,t));
 
         % Update Weights
-        beta=fminsearch(@wupdate,beta);
+        beta=fminsearch(@wupdate,10);
+        save_beta(t)=beta;
         w(:,t+1)=w(:,t).*beta.^(err_i);
         w(:,t+1)=w(:,t+1)/sum(w(:,t+1));       
         w
         t
         error
+        save_beta
+        
+        output=1;
 
 
     end
@@ -56,7 +60,7 @@ beta=1;
                 w(:,t+1)=w(:,t+1)/sum(w(:,t+1));                     
                 sum_wm=sum(w(n+1:n+m,t+1));
                 theoretical_sum=m/(m+n)+t/(S-1)*(1-m/(n+m));
-                loss=abs(sum_wm-theoretical_sum);
+                loss=abs(sum_wm-theoretical_sum)
             end    
 
         end    
