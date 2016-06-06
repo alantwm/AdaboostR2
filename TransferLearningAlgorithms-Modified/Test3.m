@@ -15,11 +15,11 @@ source_f=EPDS_UC2a(:,6);
 for i=1:10
     cv=cvpartition(length(target_f),'kfold',10);
 
-    train_x=target_x(cv.training(i),:);
-    train_f=target_f(cv.training(i),:);
+    test_x=target_x(cv.training(i),:);
+    test_f=target_f(cv.training(i),:);
 
-    test_x=target_x(cv.test(i),:);
-    test_f=target_f(cv.test(i),:);
+    train_x=target_x(cv.test(i),:);
+    train_f=target_f(cv.test(i),:);
 
 
 
@@ -33,4 +33,5 @@ for i=1:10
 end
 
 avg_rmse_single=mean(rmse_single)
-rmse_naive=mean(rmse_naive)
+avg_rmse_naive=mean(rmse_naive)
+avg_rmse_transfer=mean(rmse_transfer)

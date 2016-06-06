@@ -17,12 +17,16 @@ function [model,rmse] = AdaBoost_R2(train_x,train_f,test_x,test_f,n)
         train_in = zeros(instances,features);
         train_out = zeros(instances,1);
         for i = 1:n            
-            for j = 1:instances
-                indx = RouletteWheelSelection(distribution);
-%                 save_indx(j)=indx;
-                train_in(j,:) = train_x(indx,:);
-                train_out(j) = train_f(indx);
-            end
+%             for j = 1:instances
+%                 indx = RouletteWheelSelection(distribution);
+% %                 save_indx(j)=indx;
+%                 train_in(j,:) = train_x(indx,:);
+%                 train_out(j) = train_f(indx);
+%             end
+
+            indx=randsample(instances,instances,true,distribution);
+            train_out = train_f(indx);train_in = train_x(indx,:);
+
             hyp = fitrtree(train_in,train_out);
             y = predict(hyp,train_x);
             err = abs(train_f - y);
