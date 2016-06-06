@@ -1,5 +1,5 @@
 function [model,rmse] = TrAdaBoost_R2(train_x,train_f,source_x,source_f,test_x,test_f,S,N)
-    F = 5; % cross validation folds
+    F = 10; % cross validation folds
     % S is the number of steps allocated to the training process
     % N is the number of learners in an ensemble
 %     if S<= 1 || N<=1
@@ -45,7 +45,7 @@ function [model,rmse] = TrAdaBoost_R2(train_x,train_f,source_x,source_f,test_x,t
     train_out = zeros(instances,1);
     for i = 1:S
         rmse_list = zeros(1,F);
-        for j = 1:F
+        parfor j = 1:F
             [xxx,rmse_list(j)] = AdaBoost_R2m([CVfold(j).train_x;source_x],[CVfold(j).train_f;source_f],distribution(CVfold(j).indx),CVfold(j).test_x, ...
                 CVfold(j).test_f,N,CVfold(j).m,instances2);
         end

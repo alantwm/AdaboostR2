@@ -19,12 +19,14 @@ train_f = train_f/maxf;
 test_f = test_f/maxf;
 source_f = source_f/maxf;
 
-%%%%%%%%%%%%%%%%%%%%%%%% Transfer AdaBoost %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [source_f,B]=rescaling_linear(train_x,train_f,source_x,source_f);
 
-[xxx,rmse_single] = AdaBoost_R2(train_x,train_f,test_x,test_f,30);
-rmse_single
-[xxx,rmse_naive] = TrAdaBoost_R2(train_x,train_f,source_x,source_f,test_x,test_f,1,30);
-rmse_naive
+%%%%%%%%%%%%%%%%%%%%%%%% Transfer AdaBoost %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% [xxx,rmse_single] = AdaBoost_R2(train_x,train_f,test_x,test_f,30);
+% rmse_single
+% [xxx,rmse_naive] = TrAdaBoost_R2(train_x,train_f,source_x,source_f,test_x,test_f,1,30);
+% rmse_naive
 [xxx,rmse_transfer] = TrAdaBoost_R2(train_x,train_f,source_x,source_f,test_x,test_f,30,30);
 rmse_transfer
 
